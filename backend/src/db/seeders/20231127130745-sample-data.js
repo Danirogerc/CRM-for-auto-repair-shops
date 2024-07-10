@@ -51,6 +51,16 @@ const AppointmentsData = [
 
     confirmation_status: 'pending',
   },
+
+  {
+    // type code here for "relation_one" field
+
+    start_time: new Date('2023-10-05T17:00:00Z'),
+
+    end_time: new Date('2023-10-05T18:00:00Z'),
+
+    confirmation_status: 'confirmed',
+  },
 ];
 
 const InteractionsData = [
@@ -85,6 +95,14 @@ const InteractionsData = [
 
     notes: 'Provided estimate for battery replacement.',
   },
+
+  {
+    // type code here for "relation_one" field
+
+    interaction_time: new Date('2023-09-29T14:00:00Z'),
+
+    notes: 'Customer confirmed appointment.',
+  },
 ];
 
 const InvoicesData = [
@@ -93,7 +111,7 @@ const InvoicesData = [
 
     amount: 100,
 
-    payment_status: 'pending',
+    payment_status: 'paid',
   },
 
   {
@@ -109,7 +127,7 @@ const InvoicesData = [
 
     amount: 150,
 
-    payment_status: 'paid',
+    payment_status: 'pending',
   },
 
   {
@@ -117,7 +135,15 @@ const InvoicesData = [
 
     amount: 250,
 
-    payment_status: 'paid',
+    payment_status: 'pending',
+  },
+
+  {
+    // type code here for "relation_one" field
+
+    amount: 300,
+
+    payment_status: 'pending',
   },
 ];
 
@@ -129,7 +155,7 @@ const LeadsData = [
 
     service_interest: 'Oil Change',
 
-    status: 'new',
+    status: 'in_progress',
 
     // type code here for "relation_one" field
   },
@@ -141,7 +167,7 @@ const LeadsData = [
 
     service_interest: 'Brake Repair',
 
-    status: 'new',
+    status: 'in_progress',
 
     // type code here for "relation_one" field
   },
@@ -166,6 +192,18 @@ const LeadsData = [
     service_interest: 'Battery Check',
 
     status: 'completed',
+
+    // type code here for "relation_one" field
+  },
+
+  {
+    customer_name: 'Ethan Foster',
+
+    contact_information: 'ethan.foster@example.com',
+
+    service_interest: 'Engine Tune-Up',
+
+    status: 'in_progress',
 
     // type code here for "relation_one" field
   },
@@ -202,6 +240,14 @@ const ReportsData = [
     kpi: 'Pending Invoices',
 
     value: 10,
+  },
+
+  {
+    report_name: 'Completed Services',
+
+    kpi: 'Completed Services',
+
+    value: 30,
   },
 ];
 
@@ -251,6 +297,17 @@ async function associateAppointmentWithLead() {
   if (Appointment3?.setLead) {
     await Appointment3.setLead(relatedLead3);
   }
+
+  const relatedLead4 = await Leads.findOne({
+    offset: Math.floor(Math.random() * (await Leads.count())),
+  });
+  const Appointment4 = await Appointments.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (Appointment4?.setLead) {
+    await Appointment4.setLead(relatedLead4);
+  }
 }
 
 async function associateInteractionWithLead() {
@@ -296,6 +353,17 @@ async function associateInteractionWithLead() {
   });
   if (Interaction3?.setLead) {
     await Interaction3.setLead(relatedLead3);
+  }
+
+  const relatedLead4 = await Leads.findOne({
+    offset: Math.floor(Math.random() * (await Leads.count())),
+  });
+  const Interaction4 = await Interactions.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (Interaction4?.setLead) {
+    await Interaction4.setLead(relatedLead4);
   }
 }
 
@@ -343,6 +411,17 @@ async function associateInvoiceWithLead() {
   if (Invoice3?.setLead) {
     await Invoice3.setLead(relatedLead3);
   }
+
+  const relatedLead4 = await Leads.findOne({
+    offset: Math.floor(Math.random() * (await Leads.count())),
+  });
+  const Invoice4 = await Invoices.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (Invoice4?.setLead) {
+    await Invoice4.setLead(relatedLead4);
+  }
 }
 
 async function associateLeadWithOwner() {
@@ -388,6 +467,17 @@ async function associateLeadWithOwner() {
   });
   if (Lead3?.setOwner) {
     await Lead3.setOwner(relatedOwner3);
+  }
+
+  const relatedOwner4 = await Users.findOne({
+    offset: Math.floor(Math.random() * (await Users.count())),
+  });
+  const Lead4 = await Leads.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (Lead4?.setOwner) {
+    await Lead4.setOwner(relatedOwner4);
   }
 }
 
